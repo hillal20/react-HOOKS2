@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react";
+import Players from "./players/players";
+import Movies from "./movies/movies";
+import "./App.css";
+import context from "./context/context.js";
+import { reducer1, reducer2 } from "./context/reducers.js";
 
 function App() {
+  const [reducerPlayersState, dispatchPlayer] = useReducer(reducer1, {
+    players: []
+  });
+  const [reducerMoviesState, dispatchMovie] = useReducer(reducer2, {
+    movies: []
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <context.Provider
+      value={{
+        dispatchPlayer,
+        reducerMoviesState,
+        dispatchMovie,
+        reducerPlayersState
+      }}
+    >
+      <div className="App">
+        <h2>React Hooks </h2>
+        <Players />
+        <Movies />
+      </div>
+    </context.Provider>
   );
 }
 

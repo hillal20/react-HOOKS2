@@ -1,14 +1,14 @@
-const initialState1 = [];
-const reducer1 = (state = initialState1, action) => {
+const reducer1 = (state, action) => {
   switch (action.type) {
     case "ADD_PLAYER":
-      return (state = [...state, action.payload]);
+      console.log("player reducer state ", state);
+      state.players.push(action.payload);
+      return state;
     default:
       return state;
   }
 };
 
-// const initialState2 = [];
 const reducer2 = (state, action) => {
   switch (action.type) {
     case "ADD_MOVIE":

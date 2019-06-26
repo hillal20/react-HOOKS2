@@ -3,14 +3,13 @@ import context from "../context/context";
 
 function Movies() {
   const appState = useContext(context);
-  let appState2;
 
-  const { dispatchMovie, reducerMoviesState } = appState;
+  const { dispatchMovie } = appState;
 
-  const [title, setTitle] = useState("");
-  const [year, setYear] = useState("");
-  const [type, setType] = useState("");
-  const [allMovies, setAllMovies] = useState([]);
+  const [title, setTitle] = useState({ title: "" });
+  const [year, setYear] = useState({ year: "" });
+  const [type, setType] = useState({ type: "" });
+  const [allMovies, setAllMovies] = useState({ movies: [] });
 
   const eventHandler = e => {
     e.target.name === "title" && setTitle({ [e.target.name]: e.target.value });
@@ -27,17 +26,12 @@ function Movies() {
     setYear("");
     setType("");
   };
-  console.log("appState  ===> ", appState.reducerMoviesState.movies);
-  //   console.log("appState in movies ===> ", appState.reducerMoviesState);
-  //   //   setAllMovies(reducerMoviesState.movies);
 
-  console.log("allMovies ==> ", allMovies.movies);
   let showMovies = [];
   if (allMovies.movies !== undefined) {
     showMovies = allMovies.movies;
   }
-  //   appState2 = useContext(context);
-  useEffect(() => {}, [showMovies.length]);
+
   return (
     <div className="movies">
       <h2>Movies </h2>

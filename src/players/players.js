@@ -2,18 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import context from "../context/context";
 
 function Players() {
+  console.log(" I am here 1 ....");
+
   const appState = useContext(context);
-  // console.log("appState in players ===>  ", appState);
   const [name, setName] = useState({ name: "" });
   const [role, setRole] = useState({ role: "" });
   const [number, setNumber] = useState({ number: "" });
   const [allPlayers, setAllPlayers] = useState({ players: [] });
 
   const eventHandler = e => {
-    e.target.name === "name" && setName({ [e.target.name]: e.target.value });
-    e.target.name === "role" && setRole({ [e.target.name]: e.target.value });
-    e.target.name === "number" &&
-      setNumber({ [e.target.name]: e.target.value });
+    e.target.name === "name" && setName({ name: e.target.value });
+    e.target.name === "role" && setRole({ role: e.target.value });
+    e.target.name === "number" && setNumber({ number: e.target.value });
   };
   const { dispatchPlayer, reducerPlayersState } = appState;
   const obj = {
@@ -29,48 +29,52 @@ function Players() {
     setRole({ role: "" });
     setName({ name: "" });
   };
-  // localStorage.setItem("reducerPlayersState", reducerPlayersState);
 
-  // const saveStateToLS =  (allPlayers.players) => {
-  //   if ((reducerPlayersState.players.length = 0)) {
-  //     return;
-  //   }
-  //   try {
-  //     const reducerPlayersStateLS = JSON.stringify(reducerPlayersState);
-  //     localStorage.setItem("reducerPlayersState", reducerPlayersStateLS);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const deletePlayer = index => {
+    alert("deleting ...");
+    dispatchPlayer({ type: "DELETE_PLAYER", payload: index });
+    setAllPlayers(reducerPlayersState);
+    setNumber({ number: "" });
+    setRole({ role: "" });
+    setName({ name: "" });
+  };
 
-  // saveStateToLS(reducerPlayersState);
+  let pl = [];
+  useEffect(() => {
+    console.log(" i am here  2 .....");
 
-  // const getStateFomLS = () => {
-  //   try {
-  //     const localStoragePlayers = localStorage.getItem("reducerPlayersState");
-  //     if (localStoragePlayers === null) {
-  //       return undefined;
-  //     }
+    return () => {
+      console.log(" run before the useEffect runs for 2nd time");
+    };
+  }, [name]);
 
-  //     return JSON.parse(localStoragePlayers);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // const players = getStateFomLS() || [];
-
-  localStorage.setItem("pl", allPlayers.players);
-  console.log(localStorage);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("component unmounted ...");
+  //   };
+  // }, []);
+  pl = localStorage.getItem("playersState");
+  pl = JSON.parse(pl);
+  console.log("pl ===> ", pl);
   return (
     <div className="players">
       <h2>Players </h2>
-      {allPlayers.players.map((player, i) => {
+      {pl.players.map((player, i) => {
         return (
           <div key={i}>
             {" "}
             <div> {player.name}</div>
             <div> {player.role}</div>
             <div> {player.number}</div>
+            <div>
+              <button
+                onClick={() => {
+                  deletePlayer(i);
+                }}
+              >
+                Delete A player
+              </button>
+            </div>
           </div>
         );
       })}

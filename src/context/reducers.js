@@ -1,8 +1,18 @@
 const reducer1 = (state, action) => {
   switch (action.type) {
     case "ADD_PLAYER":
-      console.log("player reducer state ", state);
       state.players.push(action.payload);
+      console.log("player reducer state ", state);
+      let pl = localStorage.getItem("playersState");
+      pl = JSON.parse(pl);
+      const LSSate = { players: [...state.players] };
+      localStorage.setItem("playersState", JSON.stringify(LSSate));
+
+      return state;
+
+    case "DELETE_PLAYER":
+      state.players.splice(parseInt(action.payload), 1);
+      localStorage.setItem("playersState", JSON.stringify(state));
       return state;
     default:
       return state;

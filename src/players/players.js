@@ -55,29 +55,31 @@ function Players() {
   // }, []);
   pl = localStorage.getItem("playersState");
   pl = JSON.parse(pl);
+
   console.log("pl ===> ", pl);
   return (
     <div className="players">
       <h2>Players </h2>
-      {pl.players.map((player, i) => {
-        return (
-          <div key={i}>
-            {" "}
-            <div> {player.name}</div>
-            <div> {player.role}</div>
-            <div> {player.number}</div>
-            <div>
-              <button
-                onClick={() => {
-                  deletePlayer(i);
-                }}
-              >
-                Delete A player
-              </button>
+      {pl !== null &&
+        pl.players.map((player, i) => {
+          return (
+            <div key={i}>
+              {" "}
+              <div> {player.name}</div>
+              <div> {player.role}</div>
+              <div> {player.number}</div>
+              <div>
+                <button
+                  onClick={() => {
+                    deletePlayer(i);
+                  }}
+                >
+                  Delete A player
+                </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
       <input
         placeholder="name"
         name="name"

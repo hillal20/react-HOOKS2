@@ -1,7 +1,20 @@
 import React, { useContext, useState } from "react";
 import context from "../context/context";
+import io from "socket.io-client";
 
-function Movies() {
+const Movies = () => {
+  const [msg, setMsg] = useState("hilal");
+  const socket = io.connect("http://localhost:4000");
+  console.log("socket ====> ", socket);
+  // setInterval(() => {
+  //   socket.emit("msg", "hello  word ");
+  // }, 2000);
+
+  socket.on("msgBack", message => {
+    console.log("massage ====> ", message);
+    setMsg(message);
+  });
+
   const appState = useContext(context);
 
   const { dispatchMovie } = appState;
@@ -65,8 +78,12 @@ function Movies() {
       />
 
       <button onClick={addingMovie}> Add Movie</button>
+      <div>
+        <h2>Socket.io is here </h2>
+        MASSAGE:{msg}
+      </div>
     </div>
   );
-}
+};
 
 export default React.memo(Movies);
